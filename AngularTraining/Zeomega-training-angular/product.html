@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Store</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="background.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="product.js"></script>
+</head>
+<body ng-app="appProduct" ng-controller="productController">
+    <h1 id="heading1">Gadgets Store</h1>
+    <form ng-submit="addNewProduct()">
+    <nav class="navbar navbar-expand-lg bg-dark"   >
+        <div class="container-fluid" id="navbar1">
+         
+          <div class="collapse navbar-collapse" id="navbarColor02" id="navbar3" >
+            <ul class="navbar-nav me-auto"  >
+              <li class="nav-item" >
+                <label for="product-name">Product Name:</label>
+                 <input type="text" id="product-name" ng-model="productname" placeholder="PLEASE ENTER THE PRODUCT NAME" required  >
+              </li>
+              <li class="nav-item">
+                <label for="product-price">Price:</label>
+                <input type="number" id="product-price" ng-model="productprice" placeholder="enter the price" min="1" step="1" required  >
+              </li>
+              <li class="nav-item">
+                    <button type="submit" id="button1" class="btn btn-light" >Add</button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+   </form>
+
+<!-- search the Product -->
+   <div id="form">
+    <label for="term">Search:</label>
+    <input type="text" id="term" ng-model="searchProduct.name" required>
+</div>
+
+    <!-- Cards -->
+    <div class="grid">
+        <div class="product" id="product1" >
+          <table cellpadding="40px" cellspacing="40px">
+            <thead >
+                <tr >
+                    <th>Product Name</th>
+                    <th>Unit Cost</th>
+                    <th>Add To Shopping Cart</th>
+                    
+                </tr>
+            </thead>
+            <tr class="product"  ng-repeat="product in products | filter: searchProduct track by product.id">
+                <td>
+                    <h3>{{product.name}}</h3>
+                    
+                </td>
+                <td><p>₹.{{product.cost}}</p></td>
+                <td><button ng-click="addToCart(product.id)"  class="btn btn-light" id="button2" > ADD TO CART</button></td>
+              
+            </tr>
+          </table>
+            
+        </div>
+    </div>
+
+     <!-- Push Cart -->
+       <div class="cart" >
+        <h2 class="cart-header">Push cart</h2>
+        <div id="cart-items" ng-repeat="cart in cartProducts" >
+            <div id="cart1">
+                <h3>{{cart.cartProductname}}</h3>
+               
+                <p>₹.{{cart.cartProductprice}}</p>
+                <label for="product-quantity">Qty:</label>
+                <button id="increment" ng-click="increment(cart.id)">+</button>
+                {{cart.cartProductQuantity}}
+                <button id="decrement" ng-click="decrement(cart.id)">-</button>
+                <br>
+                <button  class="btn btn-light" ng-click="removeFromCart(cart.id)">Remove</button>
+                   
+            </div>
+        </div>
+        <p class="cart-total">Total Price: ₹.{{cartTotal}}</p>
+    </div>
+    
+</body>
+</html>
